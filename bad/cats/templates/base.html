@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block body %}
+Base
+{% endblock %}
+<h3>Menu</h3>
+<ul>
+    <li><a href="{% url "cat_list" %}">Cats</a></li>
+    <li><a href="{% url "breed_list" %}">Breeds</a></li>
+</ul>
+</body>
+</html>

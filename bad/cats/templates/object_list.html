@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+    <ul>
+        {% for o in objects %}
+            <li>
+                <a href="{% url single_view_name o.id %}">{{ o }}</a>
+            </li>
+        {% endfor %}
+        <li>
+            <a href="{% url single_view_name "new" %}">New</a>
+        </li>
+    </ul>
+{% endblock %}

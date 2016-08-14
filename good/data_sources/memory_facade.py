@@ -5,15 +5,14 @@ class Singleton(object):
         if not cls._instance:
             cls._instance = super(Singleton, cls).__new__(
                                 cls, *args, **kwargs)
+            cls._instance.clear()
+
         return cls._instance
 
 
 class DataFacade(Singleton):
     cats = None
     breeds = None
-
-    def __init__(self):
-        self.clear()
 
     def clear(self):
         self.cats = {}

@@ -12,24 +12,39 @@ def index(request):
 
 
 def cats(request):
-    return render(request, 'object_list.html', {'single_view_name': 'single_cat', 'objects': Cat.objects.all()})
+    facade = settings.FACADE_CLASS()
+    all_cats = facade.get_all_cats()
+
+    return render(request, 'object_list.html', {'single_view_name': 'single_cat', 'objects': all_cats})
 
 
 def single_cat(request, cat_id):
     facade = settings.FACADE_CLASS()
 
     if cat_id != 'new':
-        cat = Cat.objects.get(id=cat_id)
+        cat = facade.get_cat(int(cat_id))
     else:
         cat = None
 
+    form_initial = {'name': getattr(cat, 'name', ''), 'breed': getattr(getattr(cat, 'breed', ''), 'id', None)}
+
+    breeds = facade.get_all_breeds()
+    breed_choices = [(breed.id, breed.name) for breed in breeds]
+
     if request.method == 'POST':
-        form = CatForm(request.POST, instance=cat)
+        form = CatForm(request.POST, initial=form_initial)
+        form.fields['breed'].choices = breed_choices
         if form.is_valid():
-            form.save()
+            breed = facade.get_breed(int(form.cleaned_data['breed']))
+            c = Cat(form.cleaned_data['name'], breed)
+            if cat_id != 'new':
+                c.id = int(cat_id)
+            facade.put_cat(c)
             return redirect('cat_list')
     else:
-        form = CatForm(instance=cat)
+        form = CatForm(initial=form_initial)
+
+        form.fields['breed'].choices = breed_choices
 
     return render(request, 'single_object.html', {'form': form, 'nice_name': 'Kitty'})
 

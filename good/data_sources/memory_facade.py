@@ -6,6 +6,7 @@ class Singleton(object):
             cls._instance = super(Singleton, cls).__new__(
                                 cls, *args, **kwargs)
             cls._instance.clear()
+            # do this here instead of in __init__ because __init__ is called every time, this is only called once
 
         return cls._instance
 

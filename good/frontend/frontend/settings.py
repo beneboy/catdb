@@ -122,5 +122,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-from data_sources import memory_facade, disk_facade
-FACADE_CLASS = disk_facade.DataFacade
+from data_sources import memory_facade, disk_facade, seeded_memory_facade
+FACADE_CLASS = seeded_memory_facade.DataFacade

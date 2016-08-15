@@ -1,4 +1,9 @@
-class Cat(object):
+class ModelBase(object):
+    def __eq__(self, other):
+        return type(self) == type(other) and self.id == other.id
+
+
+class Cat(ModelBase):
     id = None
 
     def __init__(self, name, breed):
@@ -9,7 +14,7 @@ class Cat(object):
         return u'{} ({})'.format(self.name, self.breed.name)
 
 
-class Breed(object):
+class Breed(ModelBase):
     id = None
 
     def __init__(self, name):

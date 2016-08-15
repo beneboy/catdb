@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 from cats.forms import CatForm, BreedForm
-#from cats.models import Cat, Breed
 
 from model_classes.models import Cat, Breed
 
